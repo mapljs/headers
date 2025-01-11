@@ -1,40 +1,21 @@
-# Library template
+# `@mapl/headers`
+Parsing stuff for Mapl.
 
-An NPM library template using Bun.
+## CORS
+CORS header parser for Mapl.
+```ts
+import { headers as corsHeaders } from '@mapl/headers/cors';
 
-## Scripts
-
-All script sources.
-
-### [Build](./scripts/build.ts)
-
-Emit `.js` and `.d.ts` files to [`lib`](./lib).
-
-### [Publish](./scripts/publish.ts)
-
-Move [`package.json`](./package.json), [`README.md`](./README.md) to [`lib`](./lib) and publish the package.
-
-### [Bench](./scripts/bench.ts)
-
-Run files that ends with `.bench.ts` extension.
-
-## Package scripts
-
-All specified scripts in [`package.json`](./package.json).
-
-```bash
-# Build and run tests
-bun build:test
-
-# Build and run benchmarks
-bun build:bench
-
-# Build and publish the package
-bun build:publish
-
-# Lint
-bun lint
-
-# Lint and fix if possible
-bun lint:fix
+app.plug(corsHeaders, {
+  // A list of allowed headers or a single header (optional)
+  allowHeaders: ...,
+  // A list of allowed methods or a single methods (optional)
+  allowMethods: ...,
+  // A list of headers or a single header to expose (optional)
+  exposeHeaders: ...,
+  // A max age (optional)
+  maxAge: ...,
+  // Whether to allow credentials (optional)
+  allowCredentials: ...
+});
 ```

@@ -1,26 +1,30 @@
 /// <reference types='bun-types' />
 import { existsSync, rmSync } from 'node:fs';
-import { resolve } from 'node:path/posix';
+import { resolve, join } from 'node:path/posix';
 
 import { transpileDeclaration } from 'typescript';
 import tsconfig from '../tsconfig.json';
+import * as constants from '../src/constants.ts';
 
 // Constants
 const ROOTDIR = resolve(import.meta.dir, '..');
 const SOURCEDIR = `${ROOTDIR}/src`;
-const OUTDIR = `${ROOTDIR}/lib`;
+const OUTDIR = join(ROOTDIR, tsconfig.compilerOptions.declarationDir);
 
 // Remove old content
 if (existsSync(OUTDIR)) rmSync(OUTDIR, { recursive: true });
 
 // Transpile files concurrently
 const transpiler = new Bun.Transpiler({
-  loader: 'tsx',
+  loader: 'ts',
   target: 'node',
 
   // Lighter output
   minifyWhitespace: true,
-  treeShaking: true
+  treeShaking: true,
+
+  // Inline constants
+  define: Object.fromEntries(Object.entries(constants).map((entry) => [`compilerConstants.${entry[0]}`, JSON.stringify(entry[1])]))
 });
 
 for (const path of new Bun.Glob('**/*.ts').scanSync(SOURCEDIR)) {
