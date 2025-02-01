@@ -49,4 +49,4 @@ export default ((app, origins, options) => {
   // Decide right away
   headers.push(['Access-Control-Allow-Origin', origins]);
   return app.headers(headers);
-}) as RouterPlugin<Router, [origins: HeaderValue, options?: Options]>;
+}) as RouterPlugin<Router, [origins: HeaderValue] | [origins: HeaderValue, options?: Options]>;
