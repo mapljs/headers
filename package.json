@@ -15,7 +15,7 @@
     "lint:fix": "eslint ./src --fix"
   },
   "devDependencies": {
-    "@mapl/app": "^0.5.8",
+    "@mapl/app": "0.5.13",
     "@stylistic/eslint-plugin": "latest",
     "@types/bun": "latest",
     "eslint": "latest",
